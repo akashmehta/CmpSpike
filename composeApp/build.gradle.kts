@@ -49,6 +49,11 @@ kotlin {
             implementation(libs.camera.view)
             implementation(libs.camera.extensions)
             implementation(libs.accompanist.permissions)
+            implementation(libs.filekit.core)
+            implementation(libs.filekit.dialogs)
+            implementation(libs.filekit.dialogs.compose)
+            implementation(libs.filekit.coil)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         }
     }
 }
