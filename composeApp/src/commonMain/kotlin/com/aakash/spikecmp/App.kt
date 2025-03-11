@@ -14,40 +14,64 @@ import androidx.compose.ui.unit.dp
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import com.aakash.spikecmp.camera.CameraComposable
+import com.aakash.spikecmp.filechooser.FileChooserComposable
 import com.aakash.spikecmp.localdb.LocalDbManager
 
 @Composable
 @Preview
 fun App(contextFactory: ContextFactory) {
-    var openCamera by remember { mutableStateOf(false) }
-    var dbValue: String? by remember { mutableStateOf(null) }
     MaterialTheme {
-        val dbManager = LocalDbManager(contextFactory)
         Column(Modifier.fillMaxWidth().padding(10.dp),
             horizontalAlignment = Alignment.Start,
             verticalArrangement = Arrangement.spacedBy(8.dp)) {
-            if (openCamera) {
-                CameraComposable()
-            }
-            else {
-                Button(onClick = {
-                    openCamera = true
-                }) { Text("Camera Opener") }
-            }
+            CameraHandler()
 
-            Button(onClick = {
-                dbManager.saveBooleanSetting("test", true)
-                dbValue = dbManager.getBooleanSetting("test")
-            }) { Text("DB Set Value True") }
+            FileChooser()
 
-            Button(onClick = {
-                dbManager.saveBooleanSetting("test", false)
-                dbValue = dbManager.getBooleanSetting("test")
-            }) { Text("DB Set Value False") }
-
-            dbValue?.let {
-                Text("DB Value: $it")
-            }
+            DBManager(contextFactory)
         }
     }
+}
+
+@Composable
+private fun DBManager(contextFactory: ContextFactory) {
+    var dbValue: String? by remember { mutableStateOf(null) }
+    val dbManager = LocalDbManager(contextFactory)
+    Button(onClick = {
+        dbManager.saveBooleanSetting("test", true)
+        dbValue = dbManager.getBooleanSetting("test")
+    }) { Text("DB Set Value True") }
+
+    Button(onClick = {
+        dbManager.saveBooleanSetting("test", false)
+        dbValue = dbManager.getBooleanSetting("test")
+    }) { Text("DB Set Value False") }
+
+    dbValue?.let {
+        Text("DB Value: $it")
+    }
+}
+
+@Composable
+private fun FileChooser() {
+    var openFileChooser by remember { mutableStateOf(false) }
+    if (openFileChooser) {
+        openFileChooser = false
+        FileChooserComposable()
+    }
+    Button(onClick = {
+        openFileChooser = true
+    }) { Text("File Chooser") }
+}
+
+@Composable
+private fun CameraHandler() {
+    var openCamera by remember { mutableStateOf(false) }
+    if (openCamera) {
+        openCamera = false
+        CameraComposable()
+    }
+    Button(onClick = {
+        openCamera = true
+    }) { Text("Camera Opener") }
 }

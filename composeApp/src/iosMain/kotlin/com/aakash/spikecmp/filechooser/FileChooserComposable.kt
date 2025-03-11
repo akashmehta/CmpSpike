@@ -5,11 +5,12 @@ import io.github.vinceglb.filekit.dialogs.FileKitMode
 import io.github.vinceglb.filekit.dialogs.compose.rememberFilePickerLauncher
 
 @Composable
-fun FileChooserComposable() {
+actual fun FileChooserComposable() {
 
     val launcher = rememberFilePickerLauncher (
         mode = FileKitMode.Multiple()
     ) { files ->
-
+        println(files)
     }
+    launcher.launch()
 }
