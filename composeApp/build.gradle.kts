@@ -33,6 +33,8 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
+            implementation("com.philips.phdsi:native-subscription:1.3.1")
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -53,7 +55,6 @@ kotlin {
             implementation(libs.filekit.dialogs)
             implementation(libs.filekit.dialogs.compose)
             implementation(libs.filekit.coil)
-            implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4")
         }
     }
 }
